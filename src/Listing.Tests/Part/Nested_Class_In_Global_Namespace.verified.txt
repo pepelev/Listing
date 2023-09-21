@@ -1,0 +1,7 @@
+﻿partial class @A
+{
+	partial class @B
+	{
+		// TYPE HERE
+	}
+}

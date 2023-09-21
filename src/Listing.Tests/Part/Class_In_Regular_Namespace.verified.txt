@@ -1,0 +1,7 @@
+﻿namespace @Root
+{
+	partial class @A
+	{
+		// TYPE HERE
+	}
+}

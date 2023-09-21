@@ -1,0 +1,61 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.7.0" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+        <PackageReference Include="NUnit" Version="3.13.3" />
+        <PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
+        <PackageReference Include="NUnit.Analyzers" Version="3.3.0" />
+        <PackageReference Include="coverlet.collector" Version="3.1.2" />
+        <PackageReference Include="Verify.NUnit" Version="21.1.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Listing\Listing.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Part\Class_In_Global_Namespace.verified.txt">
+        <ParentFile>Class_In_Global_Namespace</ParentFile>
+      </None>
+      <None Update="Part\Class_In_Regular_Namespace.verified.txt">
+        <ParentFile>Class_In_Regular_Namespace</ParentFile>
+      </None>
+      <None Update="Part\Class_With_Base.verified.txt">
+        <ParentFile>Class_With_Base</ParentFile>
+      </None>
+      <None Update="Part\Class_With_Generic_Parameter.verified.txt">
+        <ParentFile>Class_With_Generic_Parameter</ParentFile>
+      </None>
+      <None Update="Part\Class_With_Generic_Parameters.verified.txt">
+        <ParentFile>Class_With_Generic_Parameters</ParentFile>
+      </None>
+      <None Update="Part\Nested_Class_In_Global_Namespace.verified.txt">
+        <ParentFile>Nested_Class_In_Global_Namespace</ParentFile>
+      </None>
+      <None Update="Part\Nested_Class_In_Regular_Namespace.verified.txt">
+        <ParentFile>Nested_Class_In_Regular_Namespace</ParentFile>
+      </None>
+      <None Update="Part\Nested_Class_When_Both_Has_Generic_Parameter.verified.txt">
+        <ParentFile>Nested_Class_When_Both_Has_Generic_Parameter</ParentFile>
+      </None>
+      <None Update="Part\Nested_Class_With_Generic_Parameter.verified.txt">
+        <ParentFile>Nested_Class_With_Generic_Parameter</ParentFile>
+      </None>
+      <None Update="Part\Nested_Record_In_Global_Namespace.verified.txt">
+        <ParentFile>Nested_Record_In_Global_Namespace</ParentFile>
+      </None>
+      <None Update="Part\Record_In_Global_Namespace.verified.txt">
+        <ParentFile>Record_In_Global_Namespace</ParentFile>
+      </None>
+    </ItemGroup>
+
+</Project>
