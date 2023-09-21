@@ -5,17 +5,18 @@ using Microsoft.CodeAnalysis;
 
 namespace Listing.Code;
 
-public readonly struct ReferenceTypeDeclaration : IContent
+public readonly struct TypeDeclaration<TModifiers> : IContent
+    where TModifiers : IContent
 {
-    private readonly ReferenceTypeModifiers modifiers;
+    private readonly TModifiers modifiers;
     private readonly ImmutableArray<ITypeParameterSymbol> typeParameters;
 
-    public ReferenceTypeModifiers Modifiers => modifiers;
+    public TModifiers Modifiers => modifiers;
 
     public string Name { get; }
 
-    public ReferenceTypeDeclaration(
-        ReferenceTypeModifiers modifiers,
+    public TypeDeclaration(
+        TModifiers modifiers,
         string name,
         ImmutableArray<ITypeParameterSymbol> typeParameters)
     {
@@ -26,7 +27,7 @@ public readonly struct ReferenceTypeDeclaration : IContent
 
     public void Write(Output output)
     {
-        output.Write(modifiers);
+        output.Write(in modifiers);
         output.Write(" ");
         output.Write(Name.AsContent().VerbatimPrefixed());
 

@@ -1,0 +1,13 @@
+﻿partial class @A<@TA>
+{
+	partial record @B<@TB>
+	{
+		partial struct @C<@TC>
+		{
+			partial record struct @D<@TD>
+			{
+				// TYPE HERE
+			}
+		}
+	}
+}

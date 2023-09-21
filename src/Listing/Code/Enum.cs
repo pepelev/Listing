@@ -3,20 +3,6 @@ using Listing.Contents;
 
 namespace Listing.Code;
 
-public enum AccessModifier : byte
-{
-    Default,
-    Public,
-    Internal,
-    Private
-}
-
-public enum PartialModifier : byte
-{
-    NotPartial,
-    Partial
-}
-
 public readonly struct Enum : IDisposable
 {
     private readonly Output output;
@@ -28,29 +14,29 @@ public readonly struct Enum : IDisposable
         this.output = output;
     }
 
-    public static Enum Open<T>(Output output, string modifiers, T name, UnderlyingType underlyingType = UnderlyingType.Int) where T : IContent
+    public static Enum Open<T>(Output output, AccessModifier modifiers, T name, UnderlyingType underlyingType = UnderlyingType.Int) where T : IContent
     {
         using (output.StartLine())
         {
-            output.Write(modifiers);
-            output.Write(" enum ");
-            output.Write(name);
+            var list = output.Separated(" ");
+            list.TryAppend(modifiers.AsContent());
+            list.Append("enum".AsContent());
+            list.Append(name);
             if (underlyingType != UnderlyingType.Int)
             {
-                output.Write(" : ");
-                output.Write(
-                    underlyingType switch
-                    {
-                        UnderlyingType.Byte => "byte",
-                        UnderlyingType.Sbyte => "sbyte",
-                        UnderlyingType.Ushort => "ushort",
-                        UnderlyingType.Short => "short",
-                        UnderlyingType.Uint => "uint",
-                        UnderlyingType.Ulong => "ulong",
-                        UnderlyingType.Long => "long",
-                        _ => "int"
-                    }
-                );
+                list.Append(":".AsContent());
+                var content = underlyingType switch
+                {
+                    UnderlyingType.Byte => "byte",
+                    UnderlyingType.Sbyte => "sbyte",
+                    UnderlyingType.Ushort => "ushort",
+                    UnderlyingType.Short => "short",
+                    UnderlyingType.Uint => "uint",
+                    UnderlyingType.Ulong => "ulong",
+                    UnderlyingType.Long => "long",
+                    _ => "int"
+                };
+                list.Append(content.AsContent());
             }
         }
 

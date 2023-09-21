@@ -1,0 +1,4 @@
+﻿partial record struct @A
+{
+	// TYPE HERE
+}

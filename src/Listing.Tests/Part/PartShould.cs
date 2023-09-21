@@ -26,6 +26,10 @@ public sealed class PartShould
     {
         yield return Case("Class_In_Global_Namespace", "class A {}", "A");
         yield return Case("Record_In_Global_Namespace", "record A {}", "A");
+        yield return Case("Record_Class_In_Global_Namespace", "record class A {}", "A");
+        yield return Case("Struct_In_Global_Namespace", "struct A {}", "A");
+        yield return Case("Record_Struct_In_Global_Namespace", "record struct A {}", "A");
+        yield return Case("Record_With_Primary_Ctor", "record A(int B) {}", "A");
         yield return Case("Nested_Class_In_Global_Namespace", "class A { class B {} }", "A.B");
         yield return Case("Nested_Record_In_Global_Namespace", "class A { record B {} }", "A.B");
         yield return Case("Class_In_Regular_Namespace", "namespace Root { class A {} }", "Root.A");
@@ -35,6 +39,8 @@ public sealed class PartShould
         yield return Case("Nested_Class_With_Generic_Parameter", "class A { class B<TArg> {} }", "A.B");
         yield return Case("Nested_Class_When_Both_Has_Generic_Parameter", "class A<TA> { class B<TB> {} }", "A.B");
         yield return Case("Class_With_Base", "class A {} class B : A {}", "B");
+        yield return Case("Constrained_Generic", "class A<T> where T : class {}", "A");
+        yield return Case("Complex_Nesting", "class A<TA> { record B<TB> { struct C<TC> { readonly record struct D<TD> {} } } }", "A.B.C.D");
     }
 
     [Test]
@@ -72,9 +78,9 @@ public sealed class PartShould
             CSharpSyntaxTree.ParseText(source)
         };
         var compilation = CSharpCompilation.Create(
-            assemblyName: "Tests",
-            syntaxTrees: syntaxTrees,
-            references: references,
+            "Tests",
+            syntaxTrees,
+            references,
             new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
         );
         return compilation;
