@@ -16,8 +16,22 @@ public readonly struct Namespace : IContent
         this.verbatimPrefix = verbatimPrefix;
     }
 
+    public bool IsGlobal => symbol.IsGlobalNamespace;
+    public bool DotSeparatorNeeded => !IsGlobal;
+
     public void Write(Output output)
     {
+        if (IsGlobal)
+        {
+            if (globalPrefix)
+            {
+                output.Write("global::");
+                return;
+            }
+
+            return;
+        }
+
         var @this = this;
         Print(symbol);
 

@@ -1,28 +1,15 @@
 using System.Text;
 using Listing.Code;
 using Listing.Contents;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 
 namespace Listing.Tests.Part;
 
 public sealed class PartShould
 {
-    private static INamedTypeSymbol Locate(CSharpCompilation compilation, params string[] path)
-    {
-        INamespaceOrTypeSymbol symbol = compilation.GlobalNamespace;
-        foreach (var waypoint in path)
-        {
-            symbol = symbol.GetMembers(waypoint).OfType<INamespaceOrTypeSymbol>().Single();
-        }
-
-        return (INamedTypeSymbol)symbol;
-    }
-
     private static TestCaseData Case(string name, string code, string path) =>
         new TestCaseData(code, path).SetName(name);
 
-    private static IEnumerable<TestCaseData> PartCases()
+    private static IEnumerable<TestCaseData> Cases()
     {
         yield return Case("Class_In_Global_Namespace", "class A {}", "A");
         yield return Case("Record_In_Global_Namespace", "record A {}", "A");
@@ -44,16 +31,16 @@ public sealed class PartShould
     }
 
     [Test]
-    [TestCaseSource(nameof(PartCases))]
-    public Task Print(string code, string path)
+    [TestCaseSource(nameof(Cases))]
+    public Task Print(string source, string path)
     {
-        var compilation = Compile(code);
-        return MakePart(compilation, path.Split("."));
+        var compilation = SimpleCompilation.Create(source);
+        return MakePart(compilation, path);
     }
 
-    private static Task MakePart(CSharpCompilation compilation, params string[] path)
+    private static Task MakePart(SimpleCompilation compilation, string path)
     {
-        var targetSymbol = Locate(compilation, path);
+        var targetSymbol = compilation.Locate(path);
         var output = new Output(new StringBuilder());
         var part = new Code.Part(targetSymbol);
         using (part.Open(output))
@@ -61,28 +48,6 @@ public sealed class PartShould
             output.WriteLine("// TYPE HERE".AsContent());
         }
 
-        var settings = new VerifySettings();
-        settings.UseFileName(TestContext.CurrentContext.Test.Name);
-        return Verify(output.ToString(), settings);
-    }
-
-    private static CSharpCompilation Compile(string source)
-    {
-        var references = new[]
-        {
-            MetadataReference.CreateFromFile(typeof(object).Assembly.Location)
-        };
-
-        var syntaxTrees = new[]
-        {
-            CSharpSyntaxTree.ParseText(source)
-        };
-        var compilation = CSharpCompilation.Create(
-            "Tests",
-            syntaxTrees,
-            references,
-            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
-        );
-        return compilation;
+        return Verify.Output(output);
     }
 }

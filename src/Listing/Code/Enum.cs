@@ -19,12 +19,12 @@ public readonly struct Enum : IDisposable
         using (output.StartLine())
         {
             var list = output.Separated(" ");
-            list.TryAppend(modifiers.AsContent());
-            list.Append("enum".AsContent());
-            list.Append(name);
+            list.TryWriteItem(modifiers.AsContent());
+            list.WriteItem("enum".AsContent());
+            list.WriteItem(name);
             if (underlyingType != UnderlyingType.Int)
             {
-                list.Append(":".AsContent());
+                list.WriteItem(":".AsContent());
                 var content = underlyingType switch
                 {
                     UnderlyingType.Byte => "byte",
@@ -36,7 +36,7 @@ public readonly struct Enum : IDisposable
                     UnderlyingType.Long => "long",
                     _ => "int"
                 };
-                list.Append(content.AsContent());
+                list.WriteItem(content.AsContent());
             }
         }
 

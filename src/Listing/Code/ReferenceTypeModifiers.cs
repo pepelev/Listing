@@ -37,7 +37,7 @@ public readonly struct TypeDeclaration<TModifiers> : IContent
             var list = output.CommaSeparated();
             foreach (var type in typeParameters)
             {
-                list.Append(type.Name.AsContent().VerbatimPrefixed());
+                list.WriteItem(type.Name.AsContent().VerbatimPrefixed());
             }
             output.Write(">");
         }
@@ -155,10 +155,10 @@ public readonly struct ReferenceTypeModifiers : IContent
     public void Write(Output output)
     {
         var list = output.Separated(" ");
-        list.TryAppend(Access.AsContent());
-        list.TryAppend(inheritance.AsContent());
-        list.TryAppend(PartialModifier.AsContent());
-        list.Append(kind.AsContent());
+        list.TryWriteItem(Access.AsContent());
+        list.TryWriteItem(inheritance.AsContent());
+        list.TryWriteItem(PartialModifier.AsContent());
+        list.WriteItem(kind.AsContent());
     }
 
     public override string ToString() => this.Print();

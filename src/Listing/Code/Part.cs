@@ -3,13 +3,23 @@ using Microsoft.CodeAnalysis;
 
 namespace Listing.Code;
 
-public readonly struct Part
+public sealed class Part
 {
+    private readonly IContent? additionalModifiers;
     private readonly INamedTypeSymbol symbol;
+    private readonly IContent? baseType;
+    // todo generic type constraint
+
+    public Part(IContent? additionalModifiers, INamedTypeSymbol symbol, IContent? baseType)
+    {
+        this.additionalModifiers = additionalModifiers;
+        this.symbol = symbol;
+        this.baseType = baseType;
+    }
 
     public Part(INamedTypeSymbol symbol)
+        : this(null, symbol, null)
     {
-        this.symbol = symbol;
     }
 
     public MultiBlock Open(Output output)
@@ -22,10 +32,10 @@ public readonly struct Part
             blocks++;
         }
 
-        OpenType(symbol);
+        OpenType(symbol, root: true);
         return new MultiBlock(output, blocks);
 
-        void OpenType(INamedTypeSymbol type)
+        void OpenType(INamedTypeSymbol type, bool root = false)
         {
             if (type.ContainingType is { } outer)
             {
@@ -45,7 +55,8 @@ public readonly struct Part
                     type.Name,
                     type.TypeParameters
                 );
-                output.WriteLine(declaration);
+
+                WriteDeclaration(root, declaration);
             }
             else if (type.IsValueType)
             {
@@ -54,23 +65,43 @@ public readonly struct Part
                 {
                     modifiers = modifiers.Record();
                 }
-                    
+
                 var declaration = new TypeDeclaration<ValueTypeModifiers>(
                     modifiers,
                     type.Name,
                     type.TypeParameters
                 );
-                output.WriteLine(declaration);
-                    
+
+                WriteDeclaration(root, declaration);
             }
             else
             {
                 // todo enrich warning
-                output.WriteLine(type.Name.AsContent());
+                WriteDeclaration(root, type.Name.AsContent());
             }
 
             _ = output.OpenBlock();
             blocks++;
+        }
+
+        void WriteDeclaration<T>(bool root, in T declaration) where T : IContent
+        {
+            using (output.StartLine())
+            {
+                var list = output.Separated(" ");
+                if (root)
+                {
+                    list.TryWriteItem(additionalModifiers);
+                }
+
+                list.WriteItem(declaration);
+
+                if (root && baseType is { } @base)
+                {
+                    list.WriteItem(":".AsContent());
+                    list.WriteItem(@base);
+                }
+            }
         }
     }
 }

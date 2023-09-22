@@ -18,7 +18,7 @@ internal readonly struct ParametersArguments : IContent
         var arguments = output.CommaSeparated();
         foreach (var parameter in parameters)
         {
-            arguments.Append(ContentFactory.Verbatim(parameter.Name));
+            arguments.WriteItem(ContentFactory.Verbatim(parameter.Name));
         }
     }
 

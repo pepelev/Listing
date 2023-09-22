@@ -82,6 +82,14 @@ public sealed class Output
         }
     }
 
+    public void TryWrite<T>(T? content) where T : class, IContent
+    {
+        if (content is { } value)
+        {
+            Write(value);
+        }
+    }
+
     public Line StartLine() => line;
 
     public void WriteLine<T>(in T content) where T : IContent
@@ -156,7 +164,8 @@ public sealed class Output
 
     public struct SeparatedList
     {
-        private bool empty = true;
+        private bool firstItem = true;
+        private bool itemStarted = false;
         private readonly string separator;
         private readonly Output output;
 
@@ -166,22 +175,42 @@ public sealed class Output
             this.separator = separator;
         }
 
-        public void Append<T>(in T content) where T : IContent
+        public void Write<T>(in T content) where T : IContent
         {
-            if (!empty)
+            if (!firstItem && !itemStarted)
             {
                 output.Write(separator);
             }
 
             output.Write(content);
-            empty = false;
+            itemStarted = true;
         }
 
-        public void TryAppend<T>(T? content) where T : struct, IContent
+        public void EndItem()
+        {
+            itemStarted = false;
+            firstItem = false;
+        }
+
+        public void WriteItem<T>(in T content) where T : IContent
+        {
+            Write(content);
+            EndItem();
+        }
+
+        public void TryWriteItem<T>(T? content) where T : struct, IContent
         {
             if (content is { } value)
             {
-                Append(value);
+                WriteItem(value);
+            }
+        }
+
+        public void TryWriteItem<T>(T? content) where T : class, IContent
+        {
+            if (content is { } value)
+            {
+                WriteItem(value);
             }
         }
     }

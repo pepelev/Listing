@@ -61,7 +61,7 @@ namespace Listing.Code
                     var list = output.CommaSeparated();
                     foreach (var parameter in parameters)
                     {
-                        list.Append(new Verbatim(parameter.Name));
+                        list.WriteItem(new Verbatim(parameter.Name));
                     }
 
                     output.Write(">");
@@ -101,7 +101,7 @@ namespace Listing.Code
                     var list = output.CommaSeparated();
                     foreach (var parameter in parameters)
                     {
-                        list.Append(new Verbatim(parameter.Name));
+                        list.WriteItem(new Verbatim(parameter.Name));
                     }
 
                     output.Write(">");

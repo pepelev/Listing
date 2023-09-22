@@ -69,10 +69,10 @@ public readonly struct ValueTypeModifiers : IContent
     public void Write(Output output)
     {
         var list = output.Separated(" ");
-        list.TryAppend(Access.AsContent());
-        list.TryAppend(@readonly.AsContent());
-        list.TryAppend(PartialModifier.AsContent());
-        list.TryAppend(kind.AsContent());
+        list.TryWriteItem(Access.AsContent());
+        list.TryWriteItem(@readonly.AsContent());
+        list.TryWriteItem(PartialModifier.AsContent());
+        list.TryWriteItem(kind.AsContent());
     }
 
     public override string ToString() => this.Print();

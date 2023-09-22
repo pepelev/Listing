@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="JetBrains.Annotations" Version="2023.2.0" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.7.0" PrivateAssets="all" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
         <PackageReference Include="NUnit" Version="3.13.3" />
@@ -23,38 +24,73 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Part\Class_In_Global_Namespace.verified.txt">
+      <None Update="Part\Verified\Class_In_Global_Namespace.verified.txt">
         <ParentFile>Class_In_Global_Namespace</ParentFile>
+        <DependentUpon>Class_In_Global_Namespace.cs</DependentUpon>
       </None>
-      <None Update="Part\Class_In_Regular_Namespace.verified.txt">
+      <None Update="Part\Verified\Class_In_Regular_Namespace.verified.txt">
         <ParentFile>Class_In_Regular_Namespace</ParentFile>
+        <DependentUpon>Class_In_Regular_Namespace.cs</DependentUpon>
       </None>
-      <None Update="Part\Class_With_Base.verified.txt">
+      <None Update="Part\Verified\Class_With_Base.verified.txt">
         <ParentFile>Class_With_Base</ParentFile>
+        <DependentUpon>Class_With_Base.cs</DependentUpon>
       </None>
-      <None Update="Part\Class_With_Generic_Parameter.verified.txt">
+      <None Update="Part\Verified\Class_With_Generic_Parameter.verified.txt">
         <ParentFile>Class_With_Generic_Parameter</ParentFile>
+        <DependentUpon>Class_With_Generic_Parameter.cs</DependentUpon>
       </None>
-      <None Update="Part\Class_With_Generic_Parameters.verified.txt">
+      <None Update="Part\Verified\Class_With_Generic_Parameters.verified.txt">
         <ParentFile>Class_With_Generic_Parameters</ParentFile>
+        <DependentUpon>Class_With_Generic_Parameters.cs</DependentUpon>
       </None>
-      <None Update="Part\Nested_Class_In_Global_Namespace.verified.txt">
+      <None Update="Part\Verified\Complex_Nesting.verified.txt">
+        <ParentFile>Complex_Nesting</ParentFile>
+        <DependentUpon>Complex_Nesting.cs</DependentUpon>
+      </None>
+      <None Update="Part\Verified\Constrained_Generic.verified.txt">
+        <ParentFile>Constrained_Generic</ParentFile>
+        <DependentUpon>Constrained_Generic.cs</DependentUpon>
+      </None>
+      <None Update="Part\Verified\Nested_Class_In_Global_Namespace.verified.txt">
         <ParentFile>Nested_Class_In_Global_Namespace</ParentFile>
+        <DependentUpon>Nested_Class_In_Global_Namespace.cs</DependentUpon>
       </None>
-      <None Update="Part\Nested_Class_In_Regular_Namespace.verified.txt">
+      <None Update="Part\Verified\Nested_Class_In_Regular_Namespace.verified.txt">
         <ParentFile>Nested_Class_In_Regular_Namespace</ParentFile>
+        <DependentUpon>Nested_Class_In_Regular_Namespace.cs</DependentUpon>
       </None>
-      <None Update="Part\Nested_Class_When_Both_Has_Generic_Parameter.verified.txt">
+      <None Update="Part\Verified\Nested_Class_When_Both_Has_Generic_Parameter.verified.txt">
         <ParentFile>Nested_Class_When_Both_Has_Generic_Parameter</ParentFile>
+        <DependentUpon>Nested_Class_When_Both_Has_Generic_Parameter.cs</DependentUpon>
       </None>
-      <None Update="Part\Nested_Class_With_Generic_Parameter.verified.txt">
+      <None Update="Part\Verified\Nested_Class_With_Generic_Parameter.verified.txt">
         <ParentFile>Nested_Class_With_Generic_Parameter</ParentFile>
+        <DependentUpon>Nested_Class_With_Generic_Parameter.cs</DependentUpon>
       </None>
-      <None Update="Part\Nested_Record_In_Global_Namespace.verified.txt">
+      <None Update="Part\Verified\Nested_Record_In_Global_Namespace.verified.txt">
         <ParentFile>Nested_Record_In_Global_Namespace</ParentFile>
+        <DependentUpon>Nested_Record_In_Global_Namespace.cs</DependentUpon>
       </None>
-      <None Update="Part\Record_In_Global_Namespace.verified.txt">
+      <None Update="Part\Verified\Record_Class_In_Global_Namespace.verified.txt">
+        <ParentFile>Record_Class_In_Global_Namespace</ParentFile>
+        <DependentUpon>Record_Class_In_Global_Namespace.cs</DependentUpon>
+      </None>
+      <None Update="Part\Verified\Record_In_Global_Namespace.verified.txt">
         <ParentFile>Record_In_Global_Namespace</ParentFile>
+        <DependentUpon>Record_In_Global_Namespace.cs</DependentUpon>
+      </None>
+      <None Update="Part\Verified\Record_Struct_In_Global_Namespace.verified.txt">
+        <ParentFile>Record_Struct_In_Global_Namespace</ParentFile>
+        <DependentUpon>Record_Struct_In_Global_Namespace.cs</DependentUpon>
+      </None>
+      <None Update="Part\Verified\Record_With_Primary_Ctor.verified.txt">
+        <ParentFile>Record_With_Primary_Ctor</ParentFile>
+        <DependentUpon>Record_With_Primary_Ctor.cs</DependentUpon>
+      </None>
+      <None Update="Part\Verified\Struct_In_Global_Namespace.verified.txt">
+        <ParentFile>Struct_In_Global_Namespace</ParentFile>
+        <DependentUpon>Struct_In_Global_Namespace.cs</DependentUpon>
       </None>
     </ItemGroup>
 
